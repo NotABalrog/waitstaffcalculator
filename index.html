@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Waitstaff Calculator</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="main.js" type="text/javascript"></script>
+
+
+</head>
+<body ng-app="main">
+
+
+<div ng-controller="mealController" class="mealDetails">
+    <h2>Waitstaff Calculator</h2>
+    <div class="mealForm panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Enter the Meal Details</h3>
+        </div>
+        <form name="mealDetailForm">
+            <label>Meal Price: </label><input type="number" placeholder="Base Meal Price" ng-model="user.mealPrice"/>
+            <label>Tax: </label><input type="number" placeholder="Tax Rate" ng-model="user.taxRate"/>
+            <label>Tip: </label><input type="number" placeholder="Tip Rate" ng-model="user.tipRate"/>
+            <div class="buttonGroup">
+            <button class="btn btn-default" ng-click="submitAMeal(user)">Submit</button>
+            <button class="btn btn-default" ng-click="reset()">Reset</button>
+            </div>
+        </form>
+    </div>
+    <div ng-controller="customerChargesController" class="customerCharges panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+        </div>
+        <div><label>Subtotal: {{ data.subTotal }}</label></div>
+        <div><label>Tax: {{ data.tax }}</label></div>
+        <div><label>Tip: {{ data.tip }}</label></div>
+        <div><label>Total: {{ data.total }}</label></div>
+    </div>
+    <div ng-controller="earningsController" class="earnings panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+        </div>
+        <div><label>Tip total: {{ totalTips}} </label></div>
+        <div><label>Meal count: {{ mealCount }}</label></div>
+        <div><label>Average tip per meal: {{ averageTip }}</label></div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
