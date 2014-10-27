@@ -3,45 +3,54 @@
  */
 angular.module('main', [])
     .controller('mealController', function ($scope) {
-        $scope.data = {};
 
-        $scope.submitAMeal = function (user) {
-            $scope.data = angular.copy(user);
-            var allTotals = CalculateTotals();
-            $scope.$broadcast('totalsCalculated', allTotals);
+        $scope.submitAMeal = function () {
+            console.log($scope);
+            if ($scope.mealDetailForm.$valid) {
+                $scope.submitted = false;
+                var allTotals = calculateTotals();
+                $scope.$broadcast('totalsCalculated', allTotals);
+            }
+
+            else {
+                $scope.mealDetailForm.submitted = true;
+            }
         };
 
-        $scope.reset = function (user) {
+        $scope.reset = function () {
+            $scope.setPristineAndClear();
             $scope.$broadcast('reset');
-            $scope.user.mealPrice = 0;
-            $scope.user.taxRate = 0;
-            $scope.user.tipRate = 0;
         };
 
-        function CalculateTotals() {
+        $scope.setPristineAndClear = function () {
+
+            $scope.mealDetailForm.$setPristine();
+
+            $scope.mealPrice = 0;
+            $scope.taxRate = 0;
+            $scope.tipRate = 0;
+
+            $scope.$broadcast('clear');
+
+        };
+
+        function calculateTotals() {
             var customerCharges = {};
 
-            var mealPrice = $scope.data.mealPrice;
-            var taxRate = $scope.data.taxRate / 100;
-            var tipRate = $scope.data.tipRate / 100;
-
-            var tax = mealPrice * taxRate;
-            var subTotal = mealPrice + tax;
-            var tip = mealPrice * tipRate;
-            var total = subTotal + tax + tip;
+            var mealPrice = $scope.mealPrice;
+            var taxRate = $scope.taxRate / 100;
+            var tipRate = $scope.tipRate / 100;
 
             customerCharges.tax = mealPrice * taxRate;
-            customerCharges.subTotal = mealPrice + tax;
+            customerCharges.subTotal = mealPrice + customerCharges.tax;
             customerCharges.tip = mealPrice * tipRate;
-            customerCharges.total = subTotal + tax + tip;
+            customerCharges.total = customerCharges.subTotal + customerCharges.tax + customerCharges.tip;
 
             return customerCharges;
-
         }
     })
 
     .controller('customerChargesController', function ($scope) {
-        $scope.data = {};
 
         $scope.$on('totalsCalculated', function (event, data) {
             $scope.data = angular.copy(data);
@@ -50,18 +59,19 @@ angular.module('main', [])
         $scope.$on('reset', function (event) {
             $scope.data = {};
         });
+
+        $scope.$on('clear', function (event) {
+            $scope.data = {};
+        });
     })
 
     .controller('earningsController', function ($scope) {
-        $scope.mealCount = 0;
-        $scope.tips = [];
-        $scope.averageTip = 0;
-        $scope.totalTips = 0;
+
+        reset();
 
         $scope.$on('totalsCalculated', function (event, allTotals) {
 
             $scope.mealCount++;
-            //use this later for average
             $scope.tips.push(allTotals);
 
             calculateTotalTips(allTotals);
@@ -77,11 +87,15 @@ angular.module('main', [])
         }
 
         $scope.$on('reset', function (event) {
-            $scope.mealCount = 0;
-            $scope.tips = [];
-            $scope.averageTip = 0;
-            $scope.totalTips = 0;
+            reset();
         });
+
+        function reset() {
+            $scope.mealCount = "";
+            $scope.tips = [];
+            $scope.averageTip = "";
+            $scope.totalTips = "";
+        }
 
     })
 

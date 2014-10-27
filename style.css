@@ -1,36 +1,28 @@
-.panel-heading{
-    margin-bottom: 5px;
+.panel-heading {
+margin-bottom: 5px;
 }
 
-.mealDetails{
-    width: 50%;
-    margin: 0 auto;
+.mealDetails {
+width: 50%;
+margin: 0 auto;
 }
-h4 {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
+
+h3 {
+width: 50%;
+margin: 0 auto;
+text-align: center;
 }
+
 h2 {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
+width: 50%;
+margin: 0 auto;
+text-align: center;
 }
-
 
 .buttonGroup {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 2px 2px 2px 2px;
+width: 50%;
+margin: 0 auto;
+text-align: center;
+padding: 2px 2px 10px 2px;
 }
 
-.mealForm {
-    margin: 2px 2px 2px 2px;
-    padding: 2px 2px 2px 2px;
-    text-align: center;
-
-}
-
-.mealDetailForm {
-}
